@@ -42,21 +42,25 @@
       font-family: Roboto, sans-serif;
     }
 
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
     #last-updated {
-      position: fixed;
-      right: 20px;
-      top: 10px;
+      text-align: right;
+      margin-right: 20px;
     }
 
     #container {
-      height: 100%;
+      flex: 1;
       width: 100%;
     }
   </style>
 </head>
 <body>
-  <div id="last-updated">Loading...</div>
   <div id="container"></div>
+  <p id="last-updated">Loading...</p>
 
   <script src="common.js"></script>
   <script src="cytoscape.js"></script>
