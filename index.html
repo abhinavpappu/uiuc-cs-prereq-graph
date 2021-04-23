@@ -42,6 +42,12 @@
       font-family: Roboto, sans-serif;
     }
 
+    #last-updated {
+      position: fixed;
+      right: 20px;
+      top: 10px;
+    }
+
     #container {
       height: 100%;
       width: 100%;
@@ -49,49 +55,54 @@
   </style>
 </head>
 <body>
+  <div id="last-updated">Loading...</div>
   <div id="container"></div>
+
   <script src="common.js"></script>
   <script src="cytoscape.js"></script>
   <script src="elgrapho.js"></script>
   <script>
     fetch('./data.json').then(res => res.json()).then(data => {
-        const courses = data['ns2:subject']['cascadingCourses'][0]['cascadingCourse'];
+      const term = data['ns2:subject'].parents[0].term[0]['_'];
+      document.getElementById('last-updated').innerText = `Last Updated For: ${term}`;
 
-        const graph = {
-          nodes: [], // [{ label: 'CS 241', group: 2, name: 'Systems Programming' }]
-          edges: [], // [{ from: 0, to: 23 }] (0 and 23 are indices from `nodes`)
-        }
+      const courses = data['ns2:subject']['cascadingCourses'][0]['cascadingCourse'];
 
-        courses.forEach(course => {
-          const courseName = course['$'].id;
-          const [_, courseNumber] = courseName.split(' ');
-          graph.nodes.push({
-            label: courseName,
-            group: Number(courseNumber[0]), // first digit of course number
-            title: course.label[0],
-            description: course.description[0],
-            hours: parseInt(course.creditHours[0]),
-            href: course['$'].href.replace('cisapp/explorer/catalog', 'schedule').slice(0, -4)
-          });
+      const graph = {
+        nodes: [], // [{ label: 'CS 241', group: 2, name: 'Systems Programming' }]
+        edges: [], // [{ from: 0, to: 23 }] (0 and 23 are indices from `nodes`)
+      }
+
+      courses.forEach(course => {
+        const courseName = course['$'].id;
+        const [_, courseNumber] = courseName.split(' ');
+        graph.nodes.push({
+          label: courseName,
+          group: Number(courseNumber[0]), // first digit of course number
+          title: course.label[0],
+          description: course.description[0],
+          hours: parseInt(course.creditHours[0]),
+          href: course['$'].href.replace('cisapp/explorer/catalog', 'schedule').slice(0, -4)
         });
-
-        courses.forEach((course, courseIndex) => {
-          if (course.courseSectionInformation) {
-            const prereqIndex = course.courseSectionInformation[0].indexOf('Prerequisite:');
-            if (prereqIndex > -1) {
-              const prereqInfo = course.courseSectionInformation[0].slice(prereqIndex);
-              graph.nodes.forEach((prereq, prereqIndex) => {
-                if (courseIndex !== prereqIndex && prereqInfo.includes(prereq.label)) {
-                  graph.edges.push({ from: prereqIndex, to: courseIndex });
-                }
-              });
-            }
-          }
-        });
-
-        // createElGrapho(graph);
-        createCytoScape(graph);
       });
+
+      courses.forEach((course, courseIndex) => {
+        if (course.courseSectionInformation) {
+          const prereqIndex = course.courseSectionInformation[0].indexOf('Prerequisite:');
+          if (prereqIndex > -1) {
+            const prereqInfo = course.courseSectionInformation[0].slice(prereqIndex);
+            graph.nodes.forEach((prereq, prereqIndex) => {
+              if (courseIndex !== prereqIndex && prereqInfo.includes(prereq.label)) {
+                graph.edges.push({ from: prereqIndex, to: courseIndex });
+              }
+            });
+          }
+        }
+      });
+
+      // createElGrapho(graph);
+      createCytoScape(graph);
+    });
   </script>
 </body>
 </html>
