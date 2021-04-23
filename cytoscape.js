@@ -36,43 +36,20 @@ function createCytoScape(graph) {
         selector: 'edge',
         style: {
           'width': 2,
-          // 'line-color': '#ccc',
           'line-color': edgeColor,
           'target-arrow-color': edgeColor,
-          // 'target-arrow-color': '#582',
           'target-arrow-shape': 'triangle',
-          // 'arrow-scale': 1.3,
           'curve-style': 'bezier'
         }
       }
     ],
     layout: {
-      // name: 'dagre',
-      // name: 'avsdf',
-
       name: 'klay',
       klay: {
         spacing: 30,
         thoroughness: 7,
         direction: 'DOWN',
       }
-
-      // name: 'springy',
-      // name: 'spread',
-
-      // name: 'cola',
-      // flow: { axis: 'x', minSeparation: 200 }, // use DAG/tree flow layout if specified, e.g. { axis: 'x', minSeparation: 30 }
-      // refresh: 2,
-      // avoidOverlap: true,
-      // infinite: true,
-      // // nodeSpacing: () => 25,
-      // // nodeDimensionsIncludeLabels: true,
-      // // convergenceThreshold: 0.0001,
-      // // maxSimulationTime: 20000,
-
-      // clusters: ({ id }) => Number(id.split(' ')[1][0])
-      //   name: 'grid',
-      //   rows: 1
     }
   });
 
@@ -127,7 +104,7 @@ function makeTippy(node, { title, description, hours }) {
   const dummyDomEle = document.createElement('div');
 
   const tip = tippy(dummyDomEle, {
-    theme: 'translucent',
+    theme: 'translucent', // maybe use 'light' instead?
     onCreate: instance => { // mandatory
       // patch the tippy's popper reference so positioning works
       // https://atomiks.github.io/tippyjs/misc/#custom-position

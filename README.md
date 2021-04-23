@@ -2,7 +2,7 @@
 
 Visualization of prereqs for UIUC CS courses with a dependency graph (https://uiuc-cs-prereq-graph.netlify.app/). Especially useful for seeing which courses a given course is a prereq for.
 
-Note: you can move the graph around as well as zoom in and out
+Note: You can move the graph around as well as zoom in and out. Individual nodes can also be moved around in case anything is overlapping.
 
 ### How to Run
 1. `npm install`
