@@ -6,11 +6,7 @@ Note: You can move the graph around as well as zoom in and out. Individual nodes
 
 ### How to Run
 1. `npm install`
-2. (Optional) `npm run getdata`
+2. (Optional) Update the URL in `get-data.ts` and run `npm run getdata` to get data for the most recent semester
+    - (can also be trivially modified to work with other subject courses as well, might get to that eventually)
+    - Will break if the response format for https://courses.illinois.edu/cisapp/explorer/catalog/2021/fall/CS.xml?mode=cascade changes.
 3. `npm start`
-
-Update the URL in `get-data.ts` (and run `npm run getdata`) to get data for the most recent semester
-(can also be trivially modified to work with other subject courses as well, might get to that eventually)
-
-Will break if the response format for https://courses.illinois.edu/cisapp/explorer/catalog/2021/fall/CS.xml?mode=cascade changes.
-

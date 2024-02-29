@@ -4,7 +4,7 @@ import * as fs from "fs";
 
 const parser = xml2js.Parser();
 
-const url = 'https://courses.illinois.edu/cisapp/explorer/catalog/2021/fall/CS.xml?mode=cascade';
+const url = 'https://courses.illinois.edu/cisapp/explorer/catalog/2024/spring/CS.xml?mode=cascade';
 async function main() {
   const response = await axios.get(url)
   const text: string = response.data;
